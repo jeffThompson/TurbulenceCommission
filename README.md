@@ -1,4 +1,4 @@
-!(screenshot)[https://raw.github.com/jeffThompson/TurbulenceCommission/master/Screenshot.png]
+![screenshot](https://raw.github.com/jeffThompson/TurbulenceCommission/master/Screenshot.png)
 
 Turbulence Commission
 ====================
