@@ -41,7 +41,7 @@ function init() {
 	loadFile(modelFilenames[whichModel]);
 
 	// lights
-	scene.add( new THREE.AmbientLight(0x777777));		// basic light
+	scene.add(new THREE.AmbientLight(0x777777));		// basic light
 	addShadowedLight(-1, 1, 1, 0xffffff, 1.0);			// two incidental ones
 	addShadowedLight(0.5, 1, -1, 0xffffff, 1.0);
 
@@ -70,23 +70,24 @@ function init() {
 
 // load file (encoded as ASCII format STL), pass filename (not full path) as arg
 function loadFile(filename) {
-	//$('#loadingAnimation').show();										// show loading animation
+	//$('#loadingAnimation').show();						// show loading animation
 	var loader = new THREE.STLLoader();
 	loader.addEventListener('load', function(event) {
 		var geometry = event.content;
 		var material = new THREE.MeshPhongMaterial( { ambient: objectShadowColor, color: objectColor, specular: objectReflectionColor, shininess: 50 } );
 		model = new THREE.Mesh(geometry, material);
-		model.scale.set(scale, scale, scale);						// scale to fit
-		THREE.GeometryUtils.center(geometry);						// rotate around center (http://stackoverflow.com/a/13587723/1167783)
+		model.scale.set(scale, scale, scale);				// scale to fit
+		THREE.GeometryUtils.center(geometry);				// rotate around center (http://stackoverflow.com/a/13587723/1167783)
 		model.castShadow = true;
 		model.receiveShadow = true;
 		scene.add(model);
 	});
-	loader.load('models/' + filename);								// load it!
+	loader.load('models/' + filename);		// load it!
 	
-	//$('#loadingAnimation').hide();																						// when done, hide the animation
-	$('#modelFilename').text(filename.toUpperCase());														// change filename
-	$('#download').text("download (" + filesJSON[whichModel].filesize + ")");		// show file size in download link
+	//$('#loadingAnimation').hide();											// when done, hide the animation
+	$('#modelFilename').text(filename.toUpperCase());							// change filename
+	$('#download').attr("href", "models/" + filename);							// download link
+	$('#download').text("download (" + filesJSON[whichModel].filesize + ")");	// show file size in download link
 }
 
 // add lights
@@ -125,14 +126,14 @@ function onWindowResize() {
 function animate() {
 	requestAnimationFrame(animate);
 	controls.update();
-	render();														// redraw every frame (remove to only draw when interacted with)
+	render();								// redraw every frame (remove to only draw when interacted with)
 }
 
 // render frame
 function render() {
 	if (rotateModel) {
-		model.rotation.x += 0.005;				// rotate model
-		model.rotation.y += 0.005;
+		model.rotation.x += rotSpeed;		// rotate model
+		model.rotation.y += rotSpeed;
 	}
 	renderer.render(scene, camera);			// render scene
 	if (statistics) stats.update();			// update stats
@@ -152,18 +153,24 @@ function toggleModelRotation() {
 
 // new model when arrow keys are pressed
 function nextModel() {
-	scene.remove(model);																				// remove previous model from scene
-	whichModel += 1;																						// increment which model to load
+	scene.remove(model);											// remove previous model from scene
+	whichModel += 1;												// increment which model to load
 	if (whichModel == modelFilenames.length) whichModel = 0;		// if past length of list, wrap around to 0
-	loadFile(modelFilenames[whichModel]);												// load from list of filenames
-	// rotateModel = true;																			// reset rotation to true
-	// $('#rotate').text('pause');
+	loadFile(modelFilenames[whichModel]);							// load from list of filenames
+	
+	if (rotateOnNewModel) {
+		rotateModel = true;											// if specified, reset rotation to true
+		$('#rotate').text('pause');
+	}
 }
 function prevModel() {
 	scene.remove(model);
 	whichModel -= 1;
 	if (whichModel < 0) whichModel = modelFilenames.length - 1;
 	loadFile(modelFilenames[whichModel]);
-	// rotateModel = true;
-	// $('#rotate').text('pause');
+	
+	if (rotateOnNewModel) {
+		rotateModel = true;
+		$('#rotate').text('pause');
+	}
 }

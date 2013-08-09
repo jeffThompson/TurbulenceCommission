@@ -1,0 +1,82 @@
+
+/* stylesheet | jeff thompson | www.jeffreythompson.org */
+
+/* basics */
+html, body {
+	background-color: #222222;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+a, a:visited {
+	color: rgb(200,200,200);
+	text-decoration: none;
+}
+a:hover, a:active {
+	color: rgb(255,150,0);
+	text-decoration: none;
+}
+
+/* INTRO PAGE */
+#intro {
+	margin: 30px auto;
+	padding: 60px;
+	width: 600px;
+	background-color: white;
+	text-align: center;
+}
+#intro h1 {
+	font-size: 72px;
+	font-weight: 100;
+	margin: 0;
+	padding: 0;
+}
+#intro h2 {
+	font-size: 24px;
+	font-weight: 100;
+	margin: 0;
+	padding: 0;
+}
+#safariInstructions {
+	top: 100px;
+	right: 20%;
+	display: none;
+}
+
+/* GALLERY OF MODELS */
+#info {
+	top: 0px;
+	position: absolute;
+	width: 100%;
+	margin: 20px;
+	font-size: 12px;
+}
+#modelFilename {
+	color: white;
+	font-size: 18px;
+}
+#commands {
+	margin-top: -8px;
+	color: rgb(150,150,150);
+}
+#instructions {
+	color: rgb(100,100,100);
+}
+
+/* navigation */
+#arrow-left, #arrow-right {
+	position: absolute;
+	opacity: 0.3;
+	top: 50%;
+}
+#arrow-left {
+	left: 20px;
+}
+#arrow-right {
+	right: 20px;
+}
+#arrow-left:hover, #arrow-right:hover {
+	opacity: 1.0;
+}
