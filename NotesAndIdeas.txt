@@ -1,0 +1,19 @@
+NOTES and IDEAS:
+
++ Python tools for photo-telemetry:
+		- http://wedidstuff.heavyimage.com/index.php/2013/07/12/open-source-photogrammetry-workflow
+		- https://github.com/iromu/vsfm-osx (free, Python based, hard to install on Mac at least)
+
++ other tools
+		- http://www.acute3d.com (very expensive, like rental-only for $10k a year... boo)
+		- http://www.agisoft.ru/products/photoscan/standard ($180, $60 educational)		
+				- some details: http://downloads.agisoft.ru/pdf/photoscan_0_9_1_en.pdf
+
+
+- - - - -
+
+Requirements for project:
++ should meet web accessibility standards (wave.webaim.org or similar)
++ short description and 100x100px icon by Feb 28, 2014
++ credit on homepage: "{Project Title}" is a 2013 commission of New Radio and Performing Arts, Inc, for its Turbulence.org website. It was made possible with funding from the National Endowment for the Arts.
++ must also include a "back to Turbulence link on homepage

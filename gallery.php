@@ -17,7 +17,11 @@
 		<title>3d Test - Load STL, Rotate, Interaction</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+		<!-- import Source Sans Pro + Font Awesome glyphs -->
+		<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300italic,300,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
 		
 		<!-- load all files in the 'models' folder into an array, store as JSON -->
 		<?php
@@ -39,10 +43,11 @@
 			$files = json_encode($files);
 		?>
 		<script>
+			// load models		
 			// via: http://www.dyn-web.com/tutorials/php-js/json.php
-			var modelFilenames = new Array();								// empty array for filenames
-			var filesJSON = JSON.parse('<?php echo $files ?>');				// get from JSON, store as dict
-			for (i in filesJSON) {											// iterate listings, store in array
+			var modelFilenames = new Array();											// empty array for filenames
+			var filesJSON = JSON.parse('<?php echo $files ?>');		// get from JSON, store as dict
+			for (i in filesJSON) {																// iterate listings, store in array
 				modelFilenames.push(filesJSON[i].filename);					// append to list of files
 			}
 		</script>
@@ -54,7 +59,7 @@
 			var objectColor = 0xcc9900;
 			var objectShadowColor = 0x000000;
 			var objectReflectionColor = 0x444444;
-			var backgroundColor = 0x111111;
+			var backgroundColor = 0x222222;
 			var statistics = false;					// show FPS
 			var rotateModel = true;					// rotate model automatically? toggle with link
 			var fadeInTime = 500;					// time to fade back in (ms)
@@ -62,7 +67,16 @@
 			var fadeTimer = 5000;					// how long to wait until fading out (ms)
 			var rotateOnNewModel = false;			// restart auto-rotate when a new model is loaded?
 
-			var whichModel = 0;						// index to access filenames from array
+			// index to access filenames from array
+			// if a permalink, the filename will be specified after a #
+			var whichModel = 0;
+			var modelFilenameArgument = window.location.hash.substring(1);		// http://stackoverflow.com/a/10076097/1167783
+			for (var i=0; i<modelFilenames.length; i++) {
+				if (modelFilenames[i] === modelFilenameArgument) {
+					whichModel = i;
+					break;
+				}
+			}
 		</script>
 		
 		<!-- load three.js and jquery -->
@@ -127,6 +141,11 @@
 			}
 			e.preventDefault();
 		});
+		
+		// set overflow to hidden; prevents some weird scrolling stuff
+		// also: for some reason, needs to be here and not up in the top...
+		$('body,html').css('overflow','hidden');
+			
 		</script>	
 	</head>
 	
@@ -135,13 +154,24 @@
 		<!-- display info/instructions -->
 		<div id="info">
 			<p id="modelFilename">TEST.STL</p>
-			<p id="commands">3,855 photographs&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a id="rotate" href="javascript:void(0)" onclick="toggleModelRotation()">pause</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a id="download" href="#" target="_blank">download</a></p>
+			
+			<p id="commands"><a id="rotate" href="javascript:void(0)" onclick="toggleModelRotation()">pause</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a id="download" href="#" target="_blank">download</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a id="permalink" href="index.php">permalink</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="index.php">more info</a></p>
+			<!--
+			<p id="commands"><a id="rotate" href="javascript:void(0)" onclick="toggleModelRotation()">pause</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a id="download" href="#" target="_blank">download</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a id="permalink" href="index.php">permalink</a></p>
+			-->
+			
 			<p id="instructions">click-and-drag / scrollwheel to interact</p>
-		</div>
+
+			<!-- info button back to index -->
+			<!-- <p id="infoButton"><a href="index.php">i</a></p> -->	
+		</div>  <!-- end info -->
 		
 		<!-- arrows -->
-		<img id="arrow-left" src="images/slideshowArrow-left.png" onclick="prevModel()">
-		<img id="arrow-right" src="images/slideshowArrow-right.png" onclick="nextModel()">
+		<!-- <img id="arrow-left" src="images/slideshowArrow-left.png" onclick="prevModel()">
+		<img id="arrow-right" src="images/slideshowArrow-right.png" onclick="nextModel()"> -->
+		<!-- use: icon-caret-right, icon-angle-right -->
+		<p id="arrow-left" onclick="prevModel()"><i class="icon-angle-left"></i></p>
+		<p id="arrow-right" onclick="nextModel()"><i class="icon-angle-right"></i></p>
 				
 		<!-- display 3d model -->
 		<script src="js/LoadAndDisplaySTLFile.js"></script>

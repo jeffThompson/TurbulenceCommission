@@ -84,10 +84,11 @@ function loadFile(filename) {
 	});
 	loader.load('models/' + filename);		// load it!
 	
-	//$('#loadingAnimation').hide();											// when done, hide the animation
-	$('#modelFilename').text(filename.toUpperCase());							// change filename
-	$('#download').attr("href", "models/" + filename);							// download link
-	$('#download').text("download (" + filesJSON[whichModel].filesize + ")");	// show file size in download link
+	//$('#loadingAnimation').hide();																						// when done, hide the animation
+	$('#modelFilename').text(filename.toUpperCase());														// change filename
+	$('#download').attr('href', 'models/' + filename);													// download link
+	$('#download').text('download (' + filesJSON[whichModel].filesize + ')');		// show file size in download link
+	$('#permalink').attr('href', 'gallery.php#' + filename);										// change permalink
 }
 
 // add lights
@@ -153,13 +154,13 @@ function toggleModelRotation() {
 
 // new model when arrow keys are pressed
 function nextModel() {
-	scene.remove(model);											// remove previous model from scene
-	whichModel += 1;												// increment which model to load
+	scene.remove(model);																				// remove previous model from scene
+	whichModel += 1;																						// increment which model to load
 	if (whichModel == modelFilenames.length) whichModel = 0;		// if past length of list, wrap around to 0
-	loadFile(modelFilenames[whichModel]);							// load from list of filenames
+	loadFile(modelFilenames[whichModel]);												// load from list of filenames
 	
 	if (rotateOnNewModel) {
-		rotateModel = true;											// if specified, reset rotation to true
+		rotateModel = true;																				// if specified, reset rotation to true
 		$('#rotate').text('pause');
 	}
 }
